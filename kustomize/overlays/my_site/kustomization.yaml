@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: test-openshift
+
+# SOPS encrypted secrets and ConfigMaps (environment-agnostic)
+resources:
+  - ../../base
+  - apiserver-cluster.yaml
+  - oauth.yaml
+  - ./subscriptions/sub-oadp.yaml
+  - ./subscriptions/sub-lvms.yaml
+  - ./subscriptions/sub-nmstate.yaml
+  - ./subscriptions/sub-kubevirt-hyperconverged.yaml
+  - namespace.yaml
+
+labels:
+  - includeSelectors: true
+    pairs:
+      de.db/site: mysite
+      de.db/team: responsible
+
+generators:
+  - ./secret-generator.yaml

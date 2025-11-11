@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: openshift-certificates-base
+
+resources:
+  - proxy-cluster.yaml
+  - ingresscontroller-default.yaml
+
+labels:
+  - includeSelectors: true
+    pairs:
+      de.db/team: responsible
+      managed-by: kustomize

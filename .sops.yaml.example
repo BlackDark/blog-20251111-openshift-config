@@ -1,0 +1,28 @@
+# SOPS configuration for encrypting Kubernetes secrets
+# Copy this file to .sops.yaml and update with your encryption keys
+
+creation_rules:
+  # Encrypt only files ending with .enc.yaml
+  - path_regex: \.enc\.yaml$
+    # Only encrypt the data and stringData fields (keep metadata readable)
+    encrypted_regex: ^(data|stringData)$
+    
+    # Option 1: Use Age encryption (recommended for simplicity)
+    # Generate a key with: age-keygen -o key.txt
+    # Then use the public key here:
+    age: age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    
+    # Option 2: Use GPG encryption
+    # Get your fingerprint with: gpg --list-secret-keys --keyid-format LONG
+    # Uncomment and replace with your fingerprint:
+    # pgp: YOUR_GPG_KEY_FINGERPRINT
+    
+    # Option 3: Use multiple keys for team collaboration
+    # age: >-
+    #   age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
+    #   age1yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+# Additional rules for different paths (optional)
+# - path_regex: kustomize/overlays/production/.*\.enc\.yaml$
+#   encrypted_regex: ^(data|stringData)$
+#   age: age1production_key_here

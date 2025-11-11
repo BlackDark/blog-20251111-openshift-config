@@ -1,0 +1,6 @@
+creation_rules:
+  - unencrypted_regex: "^(apiVersion|metadata|kind|type)$"
+    path_regex: (.enc.yaml|.enc.yml)
+    key_groups:
+      - kms:
+          - arn: arn:aws:kms:eu-central-1:123:key/123
